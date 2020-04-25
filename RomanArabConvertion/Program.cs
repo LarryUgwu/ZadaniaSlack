@@ -75,6 +75,28 @@ namespace RomanArabConvertion
             
         }
 
-        
+        static int toArab(string a)
+        {
+            string signsc = "MDCLXVI";
+            int[] signsv = { 1000, 500, 100, 50, 10, 5, 1 };
+            string w = "";
+
+            int x = 0, y = 0;
+            for (int i = 0; i < signsc.Length; i++)
+            {
+                while ((y = a.IndexOf(signsc[i])) != -1)
+                {
+                    w += signsv[signsc.IndexOf(a[y])];
+                    for (int j = 0; j < y; j++)
+                    {
+                        x -= signsv[signsc.IndexOf(a[j])];
+                    }
+                    a = a.Substring(y + 1, a.Length - 1);
+                }
+            }
+            return x;
+        }
+
+
     }
 }
