@@ -20,83 +20,105 @@ namespace RomanArabConvertion
         static void Main(string[] args)
         {
 
-            //dodać pytanie, czy chcesz zamienić A na R czy R na A?
+            Console.WriteLine("Co chcesz zrobić: ");
+            Console.WriteLine("Zamienić liczbę arabską na rzymską? = wciśnij 1");
+            Console.WriteLine("Zamienić liczbę rzymską na arabską? = wcisnij 2");
 
-            while (true)
+            int wybor = Convert.ToInt32(Console.ReadLine());
+
+            if (wybor == 1)
             {
-                Console.Write("Podaj liczbę arabską od 1 do 3999: ");
-                int arabska = Convert.ToInt32(Console.ReadLine());
-
-                if (arabska > 0 && arabska <= 3999)
+                while (true)
                 {
-                    tRoman(arabska);
+                    Console.Write("Podaj liczbę arabską od 1 do 3999: ");
+                    int arabska = Convert.ToInt32(Console.ReadLine());
 
+                    if (arabska > 0 && arabska <= 3999)
+                    {
+                        tRoman(arabska);
+
+                        Console.ReadKey();
+                    }
+
+                    else
+
+                    {
+                        Console.WriteLine("Liczba poza przedziałem!");
+                    }
+                }
+            }
+            else if (wybor == 2)
+            {
+                while (true)
+                {
+                    Console.Write("Podaj liczbę rzymską od I do MMMCMXCIX: ");
+                    string rzymska = Console.ReadLine();
+
+                    toArab(rzymska);
                     Console.ReadKey();
                 }
-
-                else
-
-                {
-                    Console.WriteLine("Liczba poza przedziałem!");
-                }
             }
+        
 
-  
+            return;
         }
 
-        static string tRoman(int a)
-        {
-            string signsc = "MDCLXVI";
-            int[] signsv = { 1000, 500, 100, 50, 10, 5, 1 };
-            string w = "";
 
-            for (int i = 0; i < signsc.Length; i++)
+
+
+            static string tRoman(int a)
             {
-                while (a >= signsv[i])
+                string signsc = "MDCLXVI";
+                int[] signsv = { 1000, 500, 100, 50, 10, 5, 1 };
+                string w = "";
+
+                for (int i = 0; i < signsc.Length; i++)
                 {
-                    w += signsc[i];
-                    a -= signsv[i];
-                }
-
-                int j = (i % 2 == 0) ? 2 : 1;
-
-                while (i + 1 < signsc.Length && a >= signsv[i] - signsv[i + j])
-                {
-                    w += signsc[i + j];
-                    w += signsc[i];
-                    a -= (signsv[i] - signsv[i + j]);
-                }
-            }
-
-            Console.WriteLine(w);
-
-            return w;
-
-            
-        }
-
-        static int toArab(string a)
-        {
-            string signsc = "MDCLXVI";
-            int[] signsv = { 1000, 500, 100, 50, 10, 5, 1 };
-            string w = "";
-
-            int x = 0, y = 0;
-            for (int i = 0; i < signsc.Length; i++)
-            {
-                while ((y = a.IndexOf(signsc[i])) != -1)
-                {
-                    w += signsv[signsc.IndexOf(a[y])];
-                    for (int j = 0; j < y; j++)
+                    while (a >= signsv[i])
                     {
-                        x -= signsv[signsc.IndexOf(a[j])];
+                        w += signsc[i];
+                        a -= signsv[i];
                     }
-                    a = a.Substring(y + 1, a.Length - 1);
+
+                    int j = (i % 2 == 0) ? 2 : 1;
+
+                    while (i + 1 < signsc.Length && a >= signsv[i] - signsv[i + j])
+                    {
+                        w += signsc[i + j];
+                        w += signsc[i];
+                        a -= (signsv[i] - signsv[i + j]);
+                    }
+                }
+
+                Console.WriteLine(w);
+
+                return w;
+
+
+            }
+
+        static int toArab(string b)
+        {
+            string signsc = "MDCLXVI";
+            int[] signsv = { 1000, 500, 100, 50, 10, 5, 1 };
+            int w = 0, t = 0;
+            for (int i = 0; i < signsc.Length; i++)
+            {
+                while ((t = b.IndexOf(signsc[i])) != -1)
+                {
+                    w += signsv[signsc.IndexOf(b[t])];
+                    for (int j = 0; j < t; j++)
+                    {
+                        w -= signsv[signsc.IndexOf(b[j])];
+                    }
+                    b = b.Substring(t + 1, b.Length - 1);
                 }
             }
-            return x;
+            Console.WriteLine(w);
+            return w;
         }
+    }
 
 
     }
-}
+
